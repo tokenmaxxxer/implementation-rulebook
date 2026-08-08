@@ -1,6 +1,6 @@
 ---
 date: 2026-07-25
-status: withdrawn
+status: landed
 files:
   - warrant/hooks/scope-gate.sh
 ---
