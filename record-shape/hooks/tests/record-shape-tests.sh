@@ -50,6 +50,9 @@ subject: issue-9
 role: implementation
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -66,6 +69,9 @@ None.
 MISSING_WDNW='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -78,6 +84,9 @@ Built the thing, no deviation section needed here.
 DEVIATION_NO_RATIONALE='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -94,6 +103,9 @@ None.
 DEVIATION_WITH_RATIONALE='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -139,6 +151,9 @@ run allow kill-switch-bypass "$REC" "$MISSING_WDNW" env RECORD_SHAPE_GATE_OFF=1
 EDIT_BASE='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -158,6 +173,9 @@ raw_run allow edit-replace-all-true "$REC" "$EDIT_BASE" \
 MULTIEDIT_BASE='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record
@@ -196,6 +214,74 @@ printf '{"tool_name":"Write","tool_input":{"file_path":"%s/%s","content":"nothin
 env CLAUDE_PROJECT_DIR="$_td" /bin/bash "$GATE" < "$_td/payload.json" >/dev/null 2>&1
 _rc=$?; case "$_rc" in 0) _got=allow ;; 2) _got=deny ;; *) _got="exit-$_rc" ;; esac
 rm -rf "$_td"; report deny "$_got" absolute-path-denies-like-relative
+
+# -- implementation.spec.json field alignment (issue-75) --
+
+ALL_FOUR_FIELDS='---
+code_under_review: abc1234
+loop_state: landed
+type: docs
+breaking: false
+verdict: pass
+---
+
+# Record
+
+## What was done
+
+Built the thing.
+
+## What did not work
+
+None.
+'
+
+MISSING_TYPE='---
+code_under_review: abc1234
+loop_state: landed
+breaking: false
+verdict: pass
+---
+
+# Record
+
+## What did not work
+
+None.
+'
+
+MISSING_BREAKING='---
+code_under_review: abc1234
+loop_state: landed
+type: docs
+verdict: pass
+---
+
+# Record
+
+## What did not work
+
+None.
+'
+
+MISSING_VERDICT='---
+code_under_review: abc1234
+loop_state: landed
+type: docs
+breaking: false
+---
+
+# Record
+
+## What did not work
+
+None.
+'
+
+run allow record-all-four-spec-fields "$REC" "$ALL_FOUR_FIELDS"
+run deny  missing-type-key "$REC" "$MISSING_TYPE"
+run deny  missing-breaking-key "$REC" "$MISSING_BREAKING"
+run deny  missing-verdict-key "$REC" "$MISSING_VERDICT"
 
 printf '\n== %d passed, %d failed ==\n' "$pass" "$fail"
 [ "$fail" -eq 0 ]

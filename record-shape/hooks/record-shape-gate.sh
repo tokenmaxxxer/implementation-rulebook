@@ -157,14 +157,23 @@ try:
         else:
             frontmatter = ""
     else:
-        frontmatter = new_text
+        frontmatter = ""
 
     has_code_under_review = re.search(r'(?m)^code_under_review:', frontmatter) is not None
     has_loop_state = re.search(r'(?m)^loop_state:', frontmatter) is not None
+    has_type = re.search(r'(?m)^type:', frontmatter) is not None
+    has_breaking = re.search(r'(?m)^breaking:', frontmatter) is not None
+    has_verdict = re.search(r'(?m)^verdict:', frontmatter) is not None
     if not has_code_under_review:
         missing.append("frontmatter key `code_under_review:`")
     if not has_loop_state:
         missing.append("frontmatter key `loop_state:`")
+    if not has_type:
+        missing.append("frontmatter key `type:`")
+    if not has_breaking:
+        missing.append("frontmatter key `breaking:`")
+    if not has_verdict:
+        missing.append("frontmatter key `verdict:`")
 
     # 2. `## What did not work` heading present somewhere in the body.
     has_wdnw = re.search(r'(?m)^##\s+What did not work\s*$', new_text) is not None

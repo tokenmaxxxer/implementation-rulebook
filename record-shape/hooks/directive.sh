@@ -4,10 +4,12 @@
 # Mechanizes the phase-2 deliverable norm adopted in issue-52
 # (docs/issue-52/proposals/2026-07-31-implementation-domain-norms.md,
 # section (b)): every phase-2 record at
-# docs/issue-<n>/reports/implementation.md carries `code_under_review:` and
-# `loop_state:` frontmatter, a `## What did not work` heading present even
-# when empty, and a `## Rationale for deviations` section required only
-# when execution diverged from the approved phase-1 proposal.
+# docs/issue-<n>/reports/implementation.md carries `code_under_review:`,
+# `loop_state:`, `type:`, `breaking:`, and `verdict:` frontmatter (the four
+# implementation.spec.json deliverable fields plus loop_state; `commit_sha`
+# is realized as `code_under_review:`), a `## What did not work` heading
+# present even when empty, and a `## Rationale for deviations` section
+# required only when execution diverged from the approved phase-1 proposal.
 # Kill switch: export RECORD_SHAPE_OFF=1
 
 # Off means off: `X_OFF=0` and `X_OFF=false` read as "not off" to a user and
@@ -25,10 +27,13 @@ This directive steers HOW phase-2 implementation records are written, before the
 
 RECORD SHAPE:
 - Step: every phase-2 record (`docs/issue-<n>/reports/implementation.md`)
-  carries `code_under_review:` and `loop_state:` frontmatter, a
-  `## What did not work` heading present even when empty, and doc-placement
-  ladder outcomes cross-referenced as a completed-items list, not narrated
-  only in prose.
+  carries `code_under_review:`, `loop_state:`, `type:`, `breaking:`, and
+  `verdict:` frontmatter (the four implementation.spec.json deliverable
+  fields — `commit_sha` realized as `code_under_review:` — plus
+  `loop_state`, vocabulary `coding, commit-unreachable, committing,
+  landed, scope-undeclared`), a `## What did not work` heading present
+  even when empty, and doc-placement ladder outcomes cross-referenced as
+  a completed-items list, not narrated only in prose.
 - Criterion: "present even when empty" means the heading exists with
   explicit content such as "None." — not an omitted heading.
 - Prohibition: do not narrate placement-ladder outcomes only in prose

@@ -45,26 +45,31 @@ so no pin concept applies here.
   content directly. Those may be read but not cited as the basis for a
   coding decision.
 - **NEVER-OVERWRITE:** coding writes only
-  `docs/proposals/<date>-build-<slug>.md` (`kind: build-proposal`) and
-  `docs/reports/records/<subject>/coding.md` (`kind: coding-record`).
+  `docs/issue-<n>/proposals/<date>-<slug>.md` (`kind: build-proposal`) and
+  `docs/issue-<n>/reports/implementation.md` (`kind: coding-record`).
   Finding an existing record already present at a path owned by another
   role means refuse-and-report, not overwrite-or-merge.
 
 ## 5. Blackboard record spec
 
-- `build-proposal`: `loop_state` vocabulary `proposed, approved, landed`;
-  required fields `files:` (write-set freeze list), `## Request`,
-  `## Constraints`, `## What will be done`, `## Out of scope`.
-- `coding-record`: same `loop_state` vocabulary as `build-proposal`, plus
-  `finding-response` sub-entries (section 7 below); required fields:
-  pointer to the active `build-proposal`, commit shas landed.
+- `build-proposal`: phase-1, `status` vocabulary `proposed, approved,
+  landed`; required fields `files:` (write-set freeze list), `## Request`,
+  `## Constraints`, `## Rationale`, `## What will be done`,
+  `## Out of scope`, `## How you'll know it worked`.
+- `coding-record`: phase-2, per `implementation.spec.json`; `loop_state`
+  vocabulary `coding, commit-unreachable, committing, landed,
+  scope-undeclared` (terminal: `landed`), plus `finding-response`
+  sub-entries (section 7 below). Required fields: pointer to the active
+  `build-proposal`, commit shas landed, and the spec's four deliverable
+  fields — `commit_sha` (realized as this rulebook's existing
+  `code_under_review:` key), `type`, `breaking`, `verdict`.
 - A transition coding completes internally but does not reflect onto the
   board's `loop_state` has not, for contract purposes, completed.
 
 ## 6. Produces
 
-- `build-proposal` at `docs/proposals/<date>-build-<slug>.md`
-- per-subject record at `docs/reports/records/<subject>/coding.md`
+- `build-proposal` at `docs/issue-<n>/proposals/<date>-<slug>.md`
+- per-subject record at `docs/issue-<n>/reports/implementation.md`
 
 ## 7. Finding back-edge
 
