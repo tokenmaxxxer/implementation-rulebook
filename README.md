@@ -57,9 +57,23 @@ remains at [docs/reports/generation-is-all-you-need.md](docs/reports/generation-
 
 ## Record vocabulary
 
-`loop_state`: `proposed, approved, landed` (+ `findings-resolved` per s15;
-terminal: `landed`). Signals: commit shas landed, `resolved_findings:`
-naming the finder path and finder-record sha, `## What did not work`.
+`loop_state`: `coding, commit-unreachable, committing, landed,
+scope-undeclared` (per `implementation.spec.json`; terminal: `landed`).
+Signals: commit shas landed, `resolved_findings:` naming the finder path
+and finder-record sha, `## What did not work`.
+
+Required deliverable fields on a phase-2 record, per
+`implementation.spec.json`:
+
+- `commit_sha` — realized in this rulebook as the existing
+  `code_under_review:` frontmatter key (same concept, established
+  spelling; not renamed — see `docs/issue-75/proposals/
+  2026-08-09-spec-field-loop-state-alignment.md`).
+- `type` — free-text (e.g. `docs`, `feat`, `fix`), record-shape frontmatter.
+- `breaking` — boolean, record-shape frontmatter.
+- `verdict` — e.g. `pass`, `fail`, `unverifiable`, record-shape
+  frontmatter; the no-mock directive's "run it once, state the outcome
+  honestly" step lands here.
 
 ## Install
 

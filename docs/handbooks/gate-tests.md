@@ -37,3 +37,8 @@ checking moved there when `coding`'s own record-fields/trailer gates were
 consolidated; issue-64). It carries no trailer-check case — this repo's
 current contract (`docs/specs/*.md`) does not require a `Subject:` commit
 trailer, and no gate here enforces one.
+
+Its `record-complete`/`GOOD` fixture carries `type:`/`breaking:`/
+`verdict:` frontmatter keys (issue-75) alongside `code_under_review:`/
+`loop_state:`, matching `record-shape-gate.sh`'s post-issue-75 required
+set (the `implementation.spec.json` deliverable fields).

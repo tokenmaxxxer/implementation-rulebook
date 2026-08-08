@@ -40,6 +40,9 @@ run() { # want name gate_abspath file content
 GOOD='---
 code_under_review: abc1234
 loop_state: landed
+type: docs
+breaking: false
+verdict: pass
 ---
 
 # Record

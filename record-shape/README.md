@@ -4,10 +4,13 @@ Enforces the implementation role's phase-2 record shape, adopted in
 issue-52 (`docs/issue-52/proposals/2026-07-31-implementation-domain-norms.md`,
 section (b)). The failure this targets: a phase-2 record at
 `docs/issue-<n>/reports/implementation.md` that drops the
-`code_under_review:`/`loop_state:` frontmatter, omits `## What did not
-work` when nothing happened to go wrong, or narrates a deviation from the
-approved proposal only in prose with no `## Rationale for deviations`
-section to anchor it.
+`code_under_review:`/`loop_state:`/`type:`/`breaking:`/`verdict:`
+frontmatter (the `implementation.spec.json` deliverable fields —
+`commit_sha` realized as `code_under_review:` — plus `loop_state`,
+vocabulary `coding, commit-unreachable, committing, landed,
+scope-undeclared`), omits `## What did not work` when nothing happened to
+go wrong, or narrates a deviation from the approved proposal only in
+prose with no `## Rationale for deviations` section to anchor it.
 
 record-shape owns one methodology: the phase-2 deliverable norm itself —
 frontmatter, the always-present `## What did not work` heading, and the
