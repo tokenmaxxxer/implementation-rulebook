@@ -7,13 +7,9 @@ GATE="$HERE/../proposal-shape-gate.sh"
 pass=0; fail=0
 report() { if [ "$2" = "$1" ]; then pass=$((pass+1)); printf 'ok     %-28s %s\n' "$3" "$2"; else fail=$((fail+1)); printf 'FAIL   %-28s want=%s got=%s\n' "$3" "$1" "$2"; fi; }
 
-# gate-lib.sh/gate-lib.py (core issue #72) are referenced, never vendored —
-# resolve the core plugin root for the gate subprocess.
-if [ -z "${CLAUDE_PLUGIN_ROOT_CORE:-}" ]; then
-  for _cand in "$HOME/tokenmaxxxer/tokenmaxxxer-core/core" "$HERE/../../../core"; do
-    if [ -f "$_cand/hooks/lib/gate-lib.sh" ]; then export CLAUDE_PLUGIN_ROOT_CORE="$_cand"; break; fi
-  done
-fi
+# Resolution per docs/specs/test-env-resolution.md (issue #551).
+REPO_ROOT="$(cd "$HERE/../../.." && pwd -P)"
+source "$REPO_ROOT/tests/lib/resolve-core-env.sh" || exit 75
 
 raw_run() { # want name file existing_content raw_payload_template (with %s for the resolved file path)
   local want="$1" name="$2" file="$3" existing="$4" raw_tmpl="$5"

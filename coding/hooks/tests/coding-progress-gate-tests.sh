@@ -9,11 +9,9 @@ GATE="$HERE/../coding-progress-gate.sh"
 pass=0; fail=0
 report() { if [ "$2" = "$1" ]; then pass=$((pass+1)); printf 'ok     %-38s %s\n' "$3" "$2"; else fail=$((fail+1)); printf 'FAIL   %-38s want=%s got=%s\n' "$3" "$1" "$2"; fi; }
 
-if [ -z "${CLAUDE_PLUGIN_ROOT_CORE:-}" ]; then
-  for _cand in "$HOME/tokenmaxxxer/tokenmaxxxer-core/core" "$HERE/../../../core"; do
-    if [ -f "$_cand/hooks/lib/gate-lib.sh" ]; then export CLAUDE_PLUGIN_ROOT_CORE="$_cand"; break; fi
-  done
-fi
+# Resolution per docs/specs/test-env-resolution.md (issue #551).
+REPO_ROOT="$(cd "$HERE/../../.." && pwd -P)"
+source "$REPO_ROOT/tests/lib/resolve-core-env.sh" || exit 75
 
 VBLOCK='loop_state: reproduced
 finding:
