@@ -7,15 +7,9 @@ GATE="$HERE/../record-shape-gate.sh"
 pass=0; fail=0
 report() { if [ "$2" = "$1" ]; then pass=$((pass+1)); printf 'ok     %-34s %s\n' "$3" "$2"; else fail=$((fail+1)); printf 'FAIL   %-34s want=%s got=%s\n' "$3" "$1" "$2"; fi; }
 
-# gate-lib.sh/gate-lib.py (core issue #72) are referenced, never vendored
-# (docs/handbooks/canon-scripts.md) — resolve the core plugin root for the
-# gate subprocess the same way the gate itself does, honoring an already-set
-# CLAUDE_PLUGIN_ROOT_CORE first.
-if [ -z "${CLAUDE_PLUGIN_ROOT_CORE:-}" ]; then
-  for _cand in "$HOME/tokenmaxxxer/tokenmaxxxer-core/core" "$HERE/../../../core"; do
-    if [ -f "$_cand/hooks/lib/gate-lib.sh" ]; then export CLAUDE_PLUGIN_ROOT_CORE="$_cand"; break; fi
-  done
-fi
+# Resolution per docs/specs/test-env-resolution.md (issue #551).
+REPO_ROOT="$(cd "$HERE/../../.." && pwd -P)"
+source "$REPO_ROOT/tests/lib/resolve-core-env.sh" || exit 75
 
 run() { # want name file content [env...]
   want="$1"; name="$2"; file="$3"; content="$4"; shift 4

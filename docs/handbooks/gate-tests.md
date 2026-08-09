@@ -13,6 +13,16 @@ directory first:
 
     export CLAUDE_PLUGIN_ROOT_CORE=/path/to/tokenmaxxxer-core/core
 
+This is now optional rather than mandatory: each of the eight scripts
+below that depend on core resolve it themselves per the canonical
+convention at `docs/specs/test-env-resolution.md` (`on-the-record` issue
+#551, vendored here as `gates/test_env_resolve.py` +
+`tests/lib/resolve-core-env.sh`) — `CLAUDE_PLUGIN_ROOT_CORE` first, then
+a sibling checkout. If neither resolves, the script prints
+`SKIP: core plugin unreachable — unverifiable outside spawn env` to
+stderr and exits `75`, distinct from a real pass/fail/deny — read a `75`
+exit as "unverifiable in this environment," not as a regression.
+
 Then run (see README.md "Run the checks" for the full list):
 
     bash tests/parse-check.sh

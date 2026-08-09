@@ -22,11 +22,9 @@ RECORD_SHAPE_GATE="$ROOT/record-shape/hooks/record-shape-gate.sh"
 pass=0; fail=0
 report() { if [ "$2" = "$1" ]; then pass=$((pass+1)); printf 'ok     %-34s %s\n' "$3" "$2"; else fail=$((fail+1)); printf 'FAIL   %-34s want=%s got=%s\n' "$3" "$1" "$2"; fi; }
 
-if [ -z "${CLAUDE_PLUGIN_ROOT_CORE:-}" ]; then
-  for _cand in "$HOME/tokenmaxxxer/tokenmaxxxer-core/core" "$ROOT/../core"; do
-    if [ -f "$_cand/hooks/lib/gate-lib.sh" ]; then export CLAUDE_PLUGIN_ROOT_CORE="$_cand"; break; fi
-  done
-fi
+# Resolution per docs/specs/test-env-resolution.md (issue #551).
+REPO_ROOT="$ROOT"
+source "$ROOT/tests/lib/resolve-core-env.sh" || exit 75
 
 REC=docs/issue-7/reports/implementation.md
 run() { # want name gate_abspath file content
