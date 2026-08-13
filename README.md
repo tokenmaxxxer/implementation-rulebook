@@ -54,6 +54,10 @@ remains at [docs/reports/generation-is-all-you-need.md](docs/reports/generation-
     survey-order/                       research-before-proposal ordering
                                         gate (own directive + PreToolUse gate)
     tests/                              repo-level checks (never installed)
+    playbook/                           operational decision rules
+                                        (condition -> choice -> source),
+                                        one file per decision axis —
+                                        issue-1174
 
 ## Record vocabulary
 
