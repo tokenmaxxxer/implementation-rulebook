@@ -63,6 +63,36 @@ shedding coupling that already exists.
    it further.
    source: cohesion/coupling tradeoff per https://www.sciencedirect.com/org/science/article/pii/S1546221823007154
 
+7. When a cross-module import direction is forbidden by the
+   architecture (e.g. a lower layer importing from a higher one), encode
+   that direction as an explicit, checked rule at the point the import
+   is written — do not wait for a full dependency cycle to accumulate
+   before treating it as a defect. A single forbidden edge is already
+   the violation; catching it at introduction is strictly cheaper than
+   untangling a cycle after several more edges have layered on top of
+   it.
+   source: architectural fitness-function practice, summarized at
+   https://en.wikipedia.org/wiki/Software_architecture#Architectural_quality_attributes
+
+8. When two or more local checks (lint, format, type, style) overlap in
+   the violations they catch, consolidate onto the one tool that covers
+   the union rather than running all of them in the same pipeline stage
+   — overlapping tools multiply config-drift risk (each needs its own
+   ignore-list kept in sync) without adding coverage, and a slower
+   combined pipeline gets skipped locally more often than a fast one
+   does.
+   source: tool-consolidation tradeoff summarized at
+   https://en.wikipedia.org/wiki/Static_program_analysis
+
+9. When a local pre-merge check step exists, order its individual checks
+   cheapest-and-narrowest first (touched-files-only syntax/format
+   checks) and most-expensive-and-broadest last (full-repo type/build
+   checks) — a check ordered to fail fast on common, cheap-to-detect
+   defects before spending time on expensive ones keeps the step fast
+   enough that people keep running it locally instead of skipping to CI.
+   source: fail-fast pipeline ordering, summarized at
+   https://en.wikipedia.org/wiki/Fail-fast
+
 ## Counter-example tests
 
 - Rule 1 counter-example: a central `EventBus` class legitimately touches
